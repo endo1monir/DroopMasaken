@@ -55,6 +55,8 @@ while($allProjects->have_posts()){
 
                </div>
                <?php
+
+wp_reset_query();
 }
                 }
                 ?>

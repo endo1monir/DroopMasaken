@@ -14,6 +14,10 @@ linkStyleScriptsFiles::linkScriptsAll();
 // register the main menue
 linkStyleScriptsFiles::registerTheMainmenu();
 
+//excerpt length
+
+linkStyleScriptsFiles::addExcerptLength();
+linkStyleScriptsFiles::excmore();
 
 // theme setting 
 if( function_exists('acf_add_options_page') ) {

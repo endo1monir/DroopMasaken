@@ -82,6 +82,26 @@ static function registerTheMainmenu(){
 static function createTheMainmenu(){
     register_nav_menus( ['Main-Menu'=>'القائمة الرئيسية' ] );
 }
+//add excerpt length
+static function addExcerptLength(){
+    add_filter( 'excerpt_length', array('linkStyleScriptsFiles','elzero_extend_excepert_length'));
+}
+
+static function elzero_extend_excepert_length($length){
+ return 30;
+ }
+ 
+
+ static function excmore(){
+    add_filter('excerpt_more', array('linkStyleScriptsFiles','new_excerpt_more'));
+
+ }
+ static function new_excerpt_more( $more ) {
+    return '..';
+}
+
+
+
 
 
 

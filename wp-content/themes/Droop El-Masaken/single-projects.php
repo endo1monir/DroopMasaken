@@ -365,7 +365,10 @@ $thisPostId = get_the_ID();
                                         </div>
                                     </div>
                                 
-                            <?php  }
+                            <?php 
+                            
+                            wp_reset_query();
+                        }
                             }
                             ?>
 
