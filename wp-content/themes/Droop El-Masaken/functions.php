@@ -58,7 +58,7 @@ function create_post_type_projects(){
         'labels'=>array('name'=>'اراء العملاء'),
         'menu_icon'=>'dashicons-testimonial',
         'menu_position'=>5,
-        'supports' => array('title', 'editor', 'thumbnail'),
+        'supports' => array('title', 'thumbnail'),
          
      );
      register_post_type('testonomiles',$values);

@@ -136,7 +136,7 @@ $uploads = wp_get_upload_dir();
                 'post_per_page' => '4',
             );
             $postQuery = new WP_Query($argsPosts);
-            $postQuery2=$postQuery;
+            $postQuery2 = $postQuery;
             if ($postQuery->found_posts == 1) {
 
                 while ($postQuery->have_posts()) {
@@ -144,110 +144,92 @@ $uploads = wp_get_upload_dir();
             ?>
                     <div class="col-12 mb-3 mb-md-0 col-md-12">
                         <div class="relative content-large-news">
-                            <img class='width100' src="img/newsbulding.png" alt="">
+
+                            <?php the_post_thumbnail('meduim', array('class' => 'width100')); ?>
+
                             <div class="div-large-news">
                                 <div class="flexx">
-                                    <p class="time_p"> <i class="far fa-calendar-alt"> </i> <span>july 24 2021</span></p>
+                                    <p class="time_p"> <i class="far fa-calendar-alt"> </i> <span><?php the_date('F j, Y'); ?></span></p>
                                     <p class="service_comments">
                                         <span><i class="fas fa-comment-dots"></i></span>
-                                        15 تعليق
+                                        <?php comments_popup_link('لايوجد تعليق ', '1 تعليق', '% تعليقات', 'comment-url-class', 'comment Disabled'); ?>
                                     </p>
                                 </div>
-                                <p class="theme-color p-news-abs"> كيف تستعد لمسارك الأول في مسارك مستهلكه - تركز </p>
-                                <a href="#" class="block small-title theme-color uder-line">قراءة المزيد</a>
+                                <p class="theme-color p-news-abs"> <?php the_title(); ?> </p>
+                                <a href="<?php the_permalink(); ?>" class="block small-title theme-color uder-line">قراءة المزيد</a>
                             </div>
                         </div>
                     </div>
                 <?php
                 }
+                wp_reset_query();
             } else {
-                while ($postQuery->have_posts()) {
-                    $postQuery->the_post();
+                $argumentsPost = array(
+                    'post_type' => 'post',
+                    'post_per_page' => '4',
+                );
+                $post_list = get_posts($argumentsPost);
+                $execludedID = $post_list[0]->ID;
+                //echo $execludedID;
+                for ($i = 0; $i < 1; $i++) {
+
                 ?>
                     <div class="col-12 mb-3 mb-md-0 col-md-6">
                         <div class="relative content-large-news">
-                            <?php $postQuery->the_post_thumbnail('large', array('class' => 'width100')); ?>
+                            <img class='width100' src="<?php echo get_the_post_thumbnail_url($post_list[$i]->ID, 'large'); ?>" alt="">
                             <div class="div-large-news">
                                 <div class="flexx">
-                                    <p class="time_p"> <i class="far fa-calendar-alt"> </i> <span>july 24 2021</span></p>
+                                    <p class="time_p"> <i class="far fa-calendar-alt"> </i> <span><?php echo get_the_date('F j, Y', $post_list[$i]->ID); ?></span></p>
                                     <p class="service_comments">
                                         <span><i class="fas fa-comment-dots"></i></span>
-                                        15 تعليق
+                                        <?php echo get_comments_number($post_list[$i]->ID); ?> تعليق
                                     </p>
                                 </div>
-                                <p class="theme-color p-news-abs"> <?php $postQuery->the_title(); ?></p>
-                                <a href="#" class="block small-title theme-color uder-line">قراءة المزيد</a>
+                                <p class="theme-color p-news-abs"> <?php echo $post_list[$i]->post_title; ?> </p>
+                                <a href="<?php echo get_permalink($post_list[$i]->ID); ?>" class="block small-title theme-color uder-line">قراءة المزيد</a>
                             </div>
                         </div>
                     </div>
+
                 <?php
-                break;
                 }
-                $i = 0;
-                while ($postQuery2->have_posts()) {
-                    $postQuery2->the_post();
-                    echo $postQuery2->found_posts.'---->'. $postQuery->found_posts;
-                    if ($i == 0) {
-                        echo $postQuery2->found_posts.'---->'. $postQuery->found_posts;
-                        continue;
-                    }
-                    else{
-                        echo $i;
-               ?>
-                    
-                        <div class="col-12 col-md-6">
-                            <div class="relative mb-3">
-                                <?php $postQuery2->the_post_thumbnail('large', array('class' => 'width-smll-news')); ?>
-                                <div class="div-smll-news animate__animated animate__rubberBand">
-                                    <div class="flexx">
-                                        <p class="time_p"> <i class="far fa-calendar-alt"> </i> <span>july 24 2021</span></p>
-                                        <p class="service_comments">
-                                            <span><i class="fas fa-comment-dots"></i></span>
-                                            15 تعليق
-                                        </p>
-                                    </div>
-                                    <p class="theme-color p-news-abs"> كيف تستعد لمسارك الأول في مسارك مستهلكه - تركز </p>
-                                    <a href="#" class="block small-title theme-color uder-line">قراءة المزيد</a>
+                wp_reset_query();
+                $argumentsPost2 = array(
+                    'post_type' => 'post',
+                    'post_per_page' => '4',
+                    'post__not_in' => array($execludedID)
+                );
+                $newList = get_posts($argumentsPost2);
+
+                ?>
+                <div class="col-12 col-md-6">
+                    <?php for ($i = 0; $i < count($newList); $i++) {  ?>
+                        <div class="relative mb-3">
+
+                            <img class='width-smll-news' src="<?php echo get_the_post_thumbnail_url($newList[$i]->ID, 'large'); ?>" alt="">
+                            <div class="div-smll-news animate__animated animate__rubberBand">
+                                <div class="flexx">
+                                    <p class="time_p"> <i class="far fa-calendar-alt"> </i> <span><?php echo get_the_date('F j, Y', $newList[$i]->ID); ?></span></p>
+                                    <p class="service_comments">
+                                        <span><i class="fas fa-comment-dots"></i></span>
+                                        <?php echo get_comments_number($newList[$i]->ID); ?> تعليق
+                                    </p>
                                 </div>
-                            </div>
-                            <div class="relative mb-3">
-                                <img class='width-smll-news' src="img/proj2.png" alt="">
-                                <div class="div-smll-news animate__animated animate__rubberBand">
-                                    <div class="flexx">
-                                        <p class="time_p"> <i class="far fa-calendar-alt"> </i> <span>july 24 2021</span></p>
-                                        <p class="service_comments">
-                                            <span><i class="fas fa-comment-dots"></i></span>
-                                            15 تعليق
-                                        </p>
-                                    </div>
-                                    <p class="theme-color p-news-abs"> كيف تستعد لمسارك الأول في مسارك مستهلكه - تركز </p>
-                                    <a href="#" class="block small-title theme-color uder-line">قراءة المزيد</a>
-                                </div>
-                            </div>
-                            <div class="relative mb-3">
-                                <img class='width-smll-news' src="img/proj3.png" alt="">
-                                <div class="div-smll-news animate__animated animate__rubberBand">
-                                    <div class="flexx">
-                                        <p class="time_p"> <i class="far fa-calendar-alt"> </i> <span>july 24 2021</span></p>
-                                        <p class="service_comments">
-                                            <span><i class="fas fa-comment-dots"></i></span>
-                                            15 تعليق
-                                        </p>
-                                    </div>
-                                    <p class="theme-color p-news-abs"> كيف تستعد لمسارك الأول في مسارك مستهلكه - تركز </p>
-                                    <a href="#" class="block small-title theme-color uder-line">قراءة المزيد</a>
-                                </div>
+                                <p class="theme-color p-news-abs"> <?php echo $newList[$i]->post_title; ?> </p>
+                                <a href="<?php echo get_permalink($newList[$i]->ID); ?>" class="block small-title theme-color uder-line">قراءة المزيد</a>
                             </div>
                         </div>
+                    <?php } ?>
+                </div>
             <?php
-                    }
-                    $i++;
-                }
+
             }
-
-
+wp_reset_query();
 
             ?>
+
+
+
 
 
 
@@ -261,6 +243,71 @@ $uploads = wp_get_upload_dir();
 <!-- ///////////////end news section//////////////// -->
 
 
+<!-- ////////////////section testmonials//////////////////// -->
+
+<section class="all-section sec-testmonials ">
+    <div class="all-section content-bac-img">
+        <div class="container">
+            <p class="mb-1 small-title white">العميل - دروب - المسكن</p>
+            <h2 class="title-size mb-3 mb-md-5 bold white flex justifay-start">
+                <p><span class="block"> انظر ماذا ؛</span><span class="block"> يقول عنا</span> </p>
+                <span>عملائنا</span>
+            </h2>
+
+            <div class="content-testmonials-slider">
+                <div class="tesmonials-slider swiper-container">
+                    <div class="swiper-wrapper">
+<?php 
+$reviews=array(
+'post_type'=>'testonomiles',
+'post_per_page'=>'4',
+);
+$revs=new WP_Query($reviews);
+if($revs->have_posts()){
+    while($revs->have_posts()){
+
+   $revs->the_post();
+?>
+                        <div class="swiper-slide">
+                            <div class="slider-content">
+                                <div class="flex-star">
+                                    <div class="flex-name">
+                                      <?php the_post_thumbnail( 'thumbnail', ''); ?>
+                                        <div>
+                                            <b class="block"><?php the_title(); ?></b>
+                                            <span class="block"><?php the_field('job'); ?></span>
+                                        </div>
+                                    </div>
+                                    <ul class="star-testmonials flex">
+                                        <li>
+                                            <i class="fas fa-star gold"></i>
+                                            <i class="fas fa-star gold"></i>
+                                            <i class="fas fa-star gold"></i>
+                                            <i class="fas fa-star gold"></i>
+                                            <i class="fas fa-star gold"></i>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <p class="p-tesmonials"><?php the_field('the_rev'); ?></p>
+
+                            </div>
+                        </div>
+
+<?php
+                    }
+
+                }
+                ?>
+                        <!-- Add Arrows -->
+                        <!--   <div class="swiper-button-next"></div>
+                        <div class="swiper-button-prev"></div> -->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+</section>
+<!-- ////////////////end section testmonials//////////////////// -->
 
 
 

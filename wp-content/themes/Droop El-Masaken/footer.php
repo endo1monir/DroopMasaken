@@ -8,51 +8,8 @@
                   <div class="index-map" id="map"> </div>
                </div>
                <div class="col-md-7">
-                  <form class="contact-us-form" action="index.html">
-                     <div class="row">
-                        <div class="col-md-6 col-12 ">
-                           <label for="">الاسم *</label>
-                           <div class="form-group form-log-in relative">
-                              <input type="text" class="effect-8  form-control" id="name"
-                                 placeholder="اكتب اسمك هنا ... " name="name">
-                              <span class="focus-border">
-                                 <i></i>
-                              </span>
-                           </div>
-                        </div>
-                        <div class="col-md-6 col-12 ">
-                           <label for="">رقم التليفون *</label>
-                           <div class="form-group form-log-in relative">
-                              <input type="number" class="effect-8  form-control" id="name"
-                                 placeholder="اكتب رقم تليفون هنا ... " name="name">
-                              <span class="focus-border">
-                                 <i></i>
-                              </span>
-                           </div>
-                        </div>
-                        <div class="col-12 ">
-                           <label for="">الايميل *</label>
-                           <div class="form-group form-log-in relative">
-                              <input type="email" class="effect-8  form-control" id="name"
-                                 placeholder="اكتب الايميل هنا " name="name">
-                              <span class="focus-border">
-                                 <i></i>
-                              </span>
-                           </div>
-                        </div>
-                        <div class=" col-12 ">
-                           <label for="">الرسالة *</label>
-                           <div class="form-group form-log-in relative">
-                              <textarea class="effect-8  form-control" id="name" placeholder="اكتب الرسالة هنا ... "
-                                 name="name"></textarea>
-                              <span class="focus-border">
-                                 <i></i>
-                              </span>
-                           </div>
-                        </div>
-                     </div>
-                     <button type="submit" class="call-nw blue-button"> <span> ارسال الرسالة</span> </a>
-                  </form>
+                  <p id='myres'> </p>
+                  <?php echo do_shortcode('[Andrew_form]'); ?>
 
                </div>
             </div>
@@ -96,8 +53,7 @@
                      <h4> عقارات المميزة</h4>
                      <div class="footer_post_slider">
                         <div class="swiper-container sliderfooter">
-                           <div class="swiper-wrapper">
-                              <div class="swiper-slide">
+                        <div class="swiper-slide">
                                  <div class="footer_post_slide">
                                     <div class="footer_post_image">
                                        <img src="img/Rectangle.png" alt="image" />
@@ -141,7 +97,6 @@
                                     </div>
                                  </div>
                               </div>
-                           </div>
                         </div>
                      </div>
                   </div>
